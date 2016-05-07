@@ -1,0 +1,536 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="实现原理JS执行是单线程的，但是Node底层有一个线程池，使用多线程来实现异步I/O。
+
+几大要素事件循环、观察者、请求对象、I/O线程池。
+事件循环进程启动，会创建一个while(true)的事件循环，每次是一个Tick，每个Tick就是查看是否有事件待处理，有事件则取出事件及回调，执行回调，没有则退出进程。
+
+观察者事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node中的异步I／O">
+<meta property="og:url" content="http://yoursite.com/2016/05/02/Node-I／O/index.html">
+<meta property="og:site_name" content="盆老板的烧饼铺">
+<meta property="og:description" content="实现原理JS执行是单线程的，但是Node底层有一个线程池，使用多线程来实现异步I/O。
+
+几大要素事件循环、观察者、请求对象、I/O线程池。
+事件循环进程启动，会创建一个while(true)的事件循环，每次是一个Tick，每个Tick就是查看是否有事件待处理，有事件则取出事件及回调，执行回调，没有则退出进程。
+
+观察者事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/59967359gw1f3hbss9mssj207l05yt8o.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359gw1f3hbuo2qpej20am0c00tf.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1f3hbwg24ylj20dl0d73zk.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359gw1f3hbxyctd8j20la0e740v.jpg">
+<meta property="og:updated_time" content="2016-05-02T13:13:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node中的异步I／O">
+<meta name="twitter:description" content="实现原理JS执行是单线程的，但是Node底层有一个线程池，使用多线程来实现异步I/O。
+
+几大要素事件循环、观察者、请求对象、I/O线程池。
+事件循环进程启动，会创建一个while(true)的事件循环，每次是一个Tick，每个Tick就是查看是否有事件待处理，有事件则取出事件及回调，执行回调，没有则退出进程。
+
+观察者事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/59967359gw1f3hbss9mssj207l05yt8o.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> Node中的异步I／O | 盆老板的烧饼铺 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">盆老板的烧饼铺</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Node中的异步I／O
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-05-02T20:41:35+08:00" content="2016-05-02">
+              2016-05-02
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>JS执行是单线程的，但是Node底层有一个线程池，使用多线程来实现异步I/O。</p>
+<p><img src="http://ww1.sinaimg.cn/large/59967359gw1f3hbss9mssj207l05yt8o.jpg" alt="nodeio"></p>
+<h2 id="几大要素"><a href="#几大要素" class="headerlink" title="几大要素"></a>几大要素</h2><p>事件循环、观察者、请求对象、I/O线程池。</p>
+<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><p>进程启动，会创建一个while(true)的事件循环，每次是一个Tick，每个Tick就是查看是否有事件待处理，有事件则取出事件及回调，执行回调，没有则退出进程。</p>
+<p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3hbuo2qpej20am0c00tf.jpg" alt="event loop"></p>
+<h3 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h3><p>事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是进程询问时才返回结果。<br>事件循环是生产者/消费者模型。异步I/O和网络请求是事件的生产者，这些事件被输送到观察者，事件循环是消费者，从观察者这里取出事件处理。观察者就相当于模型中的缓冲区，生产者不断产生事件放到缓冲区，而消费者从缓冲区里取出事件进行消费。</p>
+<h3 id="请求对象"><a href="#请求对象" class="headerlink" title="请求对象"></a>请求对象</h3><p>Node底层实现异步I\O，依赖请求对象。<br>假设fs.open()，根据指定路径和参数打开文件，整个调用过程：</p>
+<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hbwg24ylj20dl0d73zk.jpg" alt="request object"></p>
+<p>请求对象就在libuv这个过程创建，传入参数和当前方法都包含在这个对象中，然后再将改对象推入进程池中。<br>JS层面的请求会立即返回，继续执行后续的操作，而上面的操作都是在node层进行的，这个打开文件的请求会依赖请求对象在线程池中等待执行，执行完毕后执行相应的回调函数，而JS执行线程并不关心下面线程池里发生的事，当前的I/O操作不管是否阻塞I/O，都不会影响JS执行线程的执行，这就是异步。<br>总之，JS执行线程是单线程，而NODE底层有个线程池，这里进行多线程使用事件循环，实现异步I/O。请求对象既包括异步I/O的所有状态，从送入线程池到I/O操作后执行的回调。</p>
+<h3 id="执行回调"><a href="#执行回调" class="headerlink" title="执行回调"></a>执行回调</h3><p>送入线程池是第一步，调用回调是第二步。关键是事件循环<br>I/O执行结束后，会将结果通知IOCP（windows下,linux下epoll），并将线程归还线程池。使用事件循环的I/O观察者，如果有已经执行完的I/O，则将请求对象加入I/O观察者队列中，事件循环再Tick过程中，检测到有I/O观察者，则取出其中的请求对象，再取出请求对象中的回调函数执行。</p>
+<p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3hbxyctd8j20la0e740v.jpg" alt="do callback"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" rel="tag">#Nodejs</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/02/exports-Module-exports/" rel="next" title="exports & Module.exports">
+                <i class="fa fa-chevron-left"></i> exports & Module.exports
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/02/JS-function-calls/" rel="prev" title="JS中4种function调用方法">
+                JS中4种function调用方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/default_avatar.jpg"
+               alt="Hannah He" />
+          <p class="site-author-name" itemprop="name">Hannah He</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现原理"><span class="nav-number">1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几大要素"><span class="nav-number">2.</span> <span class="nav-text">几大要素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件循环"><span class="nav-number">2.1.</span> <span class="nav-text">事件循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者"><span class="nav-number">2.2.</span> <span class="nav-text">观察者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求对象"><span class="nav-number">2.3.</span> <span class="nav-text">请求对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行回调"><span class="nav-number">2.4.</span> <span class="nav-text">执行回调</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hannah He</span>
+</div>
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
