@@ -206,6 +206,194 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/27/react-first-sight/" itemprop="url">
+                  React初体验
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-08-27T23:11:24+08:00" content="2016-08-27">
+              2016-08-27
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="components-are-just-state-machines"><a href="#components-are-just-state-machines" class="headerlink" title="components are just state machines"></a>components are just state machines</h3><p>components只是 承载state的容器，通过state的变化来实现components的渲染</p>
+<h3 id="ownership-amp-父子关系"><a href="#ownership-amp-父子关系" class="headerlink" title="ownership &amp; 父子关系"></a>ownership &amp; 父子关系</h3><p>ownership：props和state是根据这种关系来传递数值，如果一个component在另一个component的render方法里定义，两者就存在ownership ，render中传递的值是当前定义的元素的props中<br>     父子关系是指在类似dom树结构的两个元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Parent&gt;</span><br><span class="line">	&lt;Child /&gt;</span><br><span class="line">&lt;/Parent&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在这种关系里，parent可以通过this.props.children来获取children 的 prop，也可以用 React.Children的相关操作对children进行操作</p>
+<h3 id="react-dom操作的方式"><a href="#react-dom操作的方式" class="headerlink" title="react dom操作的方式"></a>react dom操作的方式</h3><p>react在操作dom上充分考虑了性能上的优化，比如<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Card&gt;</span><br><span class="line">     &lt;p&gt;Paragraph 1&lt;/p&gt;</span><br><span class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</span><br><span class="line">&lt;/Card&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果想要删除第一个p，react不会直接destory这个元素，因为这样会触发下面所有元素的repaint；react采用的方式是destory最后一个元素，然后改变上面所有元素的值。这样的做法只需要一次render，改变值的操作只是一个repaint的方式。尤其是对于list，n个元素只需要做1次render和n-1次repaint。</p>
+<p>但是有一种情况，就是当子元素的值是保存在state中的，这里最好不要采用destory的方式，因为当state发生改变时，会强制触发整个页面重新渲染，所以这时推荐的方式是将想要删除的元素display:none<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Card&gt;</span><br><span class="line">     &lt;pstyle=&#123;&#123;display:<span class="string">'none'</span>&#125;&#125;&gt;Paragraph 1&lt;/p&gt;</span><br><span class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</span><br><span class="line">&lt;/Card&gt;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/10/h5-video/" itemprop="url">
+                  H5中的video标签
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-05-10T22:58:05+08:00" content="2016-05-10">
+              2016-05-10
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="格式问题"><a href="#格式问题" class="headerlink" title="格式问题"></a>格式问题</h2><p>video标签能够支持的格式有限，通常为mp4, webm, ogg这三种视频格式，可以通过列举多个视频格式预防某个视频文件出问题，但是这样同样也会出现视频多余加载的问题，推荐还是使用MP4，但需要注意的是，在大部分浏览器中（PC和移动端均存在），只能识别编码格式为H.264的编码格式，其他的编码格式浏览器不能正常解析，Chrome中会出现白屏（播放有声音但无图像），火狐上会提示“文件已损坏”。</p>
+<p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3pcey8tagj20cn09w751.jpg" alt="firefox error"></p>
+<h2 id="封面问题"><a href="#封面问题" class="headerlink" title="封面问题"></a>封面问题</h2><p>如果视频加载成功，video自带的封面图会根据视频的宽高进行缩放，如果视频加载失败，则会根据图片的尺寸显示出播放区域</p>
+<p><img src="http://ww3.sinaimg.cn/large/59967359gw1f3pcdlp82bj20ae06amxq.jpg" alt="correct show"></p>
+<p><img src="http://ww1.sinaimg.cn/large/59967359gw1f3pce5av9ej20an0agabf.jpg" alt="wrong show"></p>
+<p>最好用一个统一的封面加一个播放按钮，将视频隐藏，这里最好能把video标签用1px * 1px来隐藏，而不要display:none，因此display:none不会将视频激活，后续加载可能会耗时过长。不过这个有一个问题就是必须规定好视频的宽高比例，封面图片和视频保持一致，最好是可以截取视频的第一帧图像作为视频的封面。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/02/hello-world/" itemprop="url">
                   Hello World
                 </a>
@@ -727,7 +915,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
@@ -737,7 +925,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>
