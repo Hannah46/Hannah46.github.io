@@ -285,6 +285,46 @@
 <h3 id="react-dom操作的方式"><a href="#react-dom操作的方式" class="headerlink" title="react dom操作的方式"></a>react dom操作的方式</h3><p>react在操作dom上充分考虑了性能上的优化，比如<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Card&gt;</div><div class="line">     &lt;p&gt;Paragraph 1&lt;/p&gt;</div><div class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</div><div class="line">&lt;/Card&gt;</div></pre></td></tr></table></figure></p>
 <p>如果想要删除第一个p，react不会直接destory这个元素，因为这样会触发下面所有元素的repaint；react采用的方式是destory最后一个元素，然后改变上面所有元素的值。这样的做法只需要一次render，改变值的操作只是一个repaint的方式。尤其是对于list，n个元素只需要做1次render和n-1次repaint。</p>
 <p>但是有一种情况，就是当子元素的值是保存在state中的，这里最好不要采用destory的方式，因为当state发生改变时，会强制触发整个页面重新渲染，所以这时推荐的方式是将想要删除的元素display:none<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Card&gt;</div><div class="line">     &lt;pstyle=&#123;&#123;display:<span class="string">'none'</span>&#125;&#125;&gt;Paragraph 1&lt;/p&gt;</div><div class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</div><div class="line">&lt;/Card&gt;</div></pre></td></tr></table></figure></p>
+<p>当元素是一个list生成时，如果需要操作list中的元素，同时又要保存state中的数据，最好给每个元素都附上一个key值，React在遇到设置了key值的元素时，会重新安排或者直接销毁。注意key值不要写在render内的html元素上，而是写在owner的render方法里<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// WRONG!</div><div class="line">varListItemWrapper=React.createClass(&#123;</div><div class="line">     render:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&lt;li key=&#123;this.props.data.id&#125;&gt;&#123;this.props.data.text&#125;&lt;/li&gt;;</div><div class="line">     &#125;</div><div class="line">&#125;);</div><div class="line">var ListItemWrapper = React.createClass(&#123;</div><div class="line">     render:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&lt;li&gt;&#123;this.props.data.text&#125;&lt;/li&gt;;</div><div class="line">     &#125;&#125;);</div><div class="line">     varMyComponent=React.createClass(</div><div class="line">          &#123;render:<span class="function"><span class="title">function</span></span>()&#123;<span class="built_in">return</span>(</div><div class="line">               &lt;ul&gt;&#123;this.props.results.map(<span class="keyword">function</span>(result)&#123;</div><div class="line">                     <span class="built_in">return</span>&lt;ListItemWrapperkey=&#123;result.id&#125;data=&#123;result&#125;/&gt;;</div><div class="line">     &#125;)&#125;</div><div class="line">     &lt;/ul&gt;);</div><div class="line">&#125;&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="props"><a href="#props" class="headerlink" title="props"></a>props</h3><p>  owner组件与owned组件之间数据传输，是一种单向绑定。owned组件通过states来接收props传递的值<br>  如果需要判断是否改变数据，重写shouldComponentUpdate(),return false的时候不会做组件更新<br>尤其当数据量较大的时候，使用shouldComponentUpdate( )可以提升性能。<br>注意：</p>
+<ul>
+<li>初始化的render过程和调用forceUpdate( )时，都不会再调用shouldComponentUpdate()<br>当调用shouldComponentUpdate( )，元素的componentWillUpdate and componentDidUpdate不会调用。<br>   componentWillUpdate，当props或者state改变时，立刻触发，before rendering<br>   componentDidUpdate，当组件更新时，改变Dom节点<br>这些都是生命周期中的方法  </li>
+<li>shouldComponentUpdate( )存在数据的一致性问题，如果数据已经改变，但方法返回false，ui组件仍然不会同步更新，所以需要谨慎使用。</li>
+</ul>
+<h3 id="组件中可定义的方法"><a href="#组件中可定义的方法" class="headerlink" title="组件中可定义的方法"></a>组件中可定义的方法</h3><ul>
+<li>render：required，调用时会检查this.props &amp; this.state，返回一个单一的子元素。</li>
+<li>getInitialState：组件被添加前调用，返回值作为this.state的初始值</li>
+<li>getDefaultProps：class被创建时调用一次，之后被缓存，如果父组件未初始化props，则返回值作为props的初始值。因此在该方法调用时，取不到this.props，同时方法返回的复杂对象在实例之间是共享的，而不是复制的</li>
+<li>propTypes：检测传递给组件的props的数据类型<br><a href="https://facebook.github.io/react/docs/reusable-components.html" target="_blank" rel="external">propTypes</a></li>
+<li>mixins：不同的组件之间共享的设置，是一个array  mixins: [SetIntervalMixin]</li>
+<li>statics：class可以直接调用的静态方法，与props&amp;state无关，实例创建之前即可调用</li>
+<li>displayName：用于debug，其实是JSX转化的时候使用</li>
+</ul>
+<h3 id="生命周期（这个对于React来说相当重要）"><a href="#生命周期（这个对于React来说相当重要）" class="headerlink" title="生命周期（这个对于React来说相当重要）"></a>生命周期（这个对于React来说相当重要）</h3><p>1、Mount<br>     componentWillMount：client &amp; server均执行。render方法调用前立刻触发，setState在这个方法中调用，如果设置了setState，render会接收到更新的state值，然后只调用一次<br>     componentDidMount：only on client。render方法调用后立刻触发，在这个方法里获取refs绑定的子元素，调用过程中子元素先于父元素调用。引入其他js框架，设置计时器，发送ajax请求都在这个方法中做<br>2、Update(初始化的render过程都不会触发)<br>     componentWillReceiveProps：接收新的props调用，可能的调用场景：父元素通过setState改变子元素的props时调用，所有因为props改变而引发的操作都在这个方法里<br>props的旧值通过this.props调用，这时还没有完成改变的动作。<br>当props发生改变时会触发这个方法，但是并不可以在这个方法中检测props是否发生了改变，这并不是一个相互的过程。如果需要检测state的变化，可以用componentWillUpdate<br>     shouldComponentUpdate：接收到新的props和state之后，在render之前触发。<br>当props和state改变不需要刷新组件时，return false，render( )不会调用，componentWillUpdate和componentDidUpdate也都不会触发<br>     componentWillUpdate：接收到新props和states之后立刻触发，此时还未执行render<br>方法内不能使用setState( )，如果需要根据新的props修改state，需要在componentWillReceiveProps里<br>     componentDidUpdate：组件的变化传递到dom时立刻触发，这里可以执行DOM上的一些操作<br>     componentWillUnmount：组件从DOM中移除前立刻触发  </p>
+<h3 id="与ES6结合"><a href="#与ES6结合" class="headerlink" title="与ES6结合"></a>与ES6结合</h3><ul>
+<li>使用ES6 create class<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class HelloMessage extends React.Component &#123;</div><div class="line">     <span class="function"><span class="title">render</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&lt;div&gt;Hello&#123;this.props.name&#125;&lt;/div&gt;;</div><div class="line">     &#125;</div><div class="line">&#125;</div><div class="line">ReactDOM.render(&lt;HelloMessagename=<span class="string">"Sebastian"</span>/&gt;,mountNode);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样引用也可以使用ES6的import   </p>
+<ul>
+<li>使用ES6创建的组件，不会自动绑定this，使用时<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div onClick=&#123;this.tick.bind(this)&#125;&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>也可以在construtor里面使用.bind(this)，这样就可以在dom中直接使用this.xxx    </p>
+<ul>
+<li><p>… 扩展操作符<br>es6中的… 可以将一个对象展开，拆成若干个用，隔开的数据，外层包一个[ ]  则转化为了数组，外层包一个{ }则转化了对象<br>可以使用…来控制props中传递的值<br>var { checked, …other } = props;<br>这样props中就不会包括checked属性，如果又想要传递给内部的元素，可以使用显示的传递</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;input &#123;...other&#125;</div><div class="line">     checked=&#123;checked&#125;</div><div class="line">     className=&#123;fancyClass&#125;</div><div class="line">     <span class="built_in">type</span>=<span class="string">"checkbox"</span></div><div class="line">/&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>=&gt; 箭头操作符<br>相当于.bind(this)</p>
+</li>
+</ul>
+<h3 id="virtual-DOM"><a href="#virtual-DOM" class="headerlink" title="virtual DOM"></a>virtual DOM</h3><ul>
+<li>react中类似DOM中的东西（render 中构建的）都是virtual DOM，react会有一个虚拟试图（react browser），用来呈现virtual DOM，所有的更新都发生在virtual DOM上，之后react会采取效率最高的方式将virtual      DOM更新到真正的DOM上。react不直接操作DOM，所以效率很快   </li>
+<li>如果想要取到真正的DOM，可以给dom指定ref值<br>ref既可以绑定到真正的DOM节点上，返回一个DOM节点，也可以绑定在一个react组件上，返回的是一个React class。常用的场景是查找DOM<br>ref也可以是一个回调函数，当组件被挂载（mount）到dom节点中时立刻触发，被标记了ref的dom节点作为回调函数的参数  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">render: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    <span class="built_in">return</span> (</div><div class="line">      &lt;TextInput</div><div class="line">        ref=&#123;<span class="keyword">function</span>(input) &#123;</div><div class="line">          <span class="keyword">if</span> (input != null) &#123;</div><div class="line">            input.focus();</div><div class="line">          &#125;</div><div class="line">        &#125;&#125; /&gt;</div><div class="line">    );</div><div class="line">  &#125;,</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>也可以是个string，标识整个组件的backing instance<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;input ref=<span class="string">"myInput"</span> /&gt;</div><div class="line">var input = this.refs.myInput;</div><div class="line">var inputValue = input.value;</div><div class="line">var inputRect = input.getBoundingClientRect();</div></pre></td></tr></table></figure></p>
+<p>注意：ref不要使用在render方法中<br>  ref其实指向的是backing instance，所以不能给stateless的组件标记ref，因为stateless不存在backing instance</p>
 
           
         
@@ -384,108 +424,6 @@
 <p><img src="http://ww3.sinaimg.cn/large/59967359gw1f3pcdlp82bj20ae06amxq.jpg" alt="correct show"></p>
 <p><img src="http://ww1.sinaimg.cn/large/59967359gw1f3pce5av9ej20an0agabf.jpg" alt="wrong show"></p>
 <p>最好用一个统一的封面加一个播放按钮，将视频隐藏，这里最好能把video标签用1px * 1px来隐藏，而不要display:none，因此display:none不会将视频激活，后续加载可能会耗时过长。不过这个有一个问题就是必须规定好视频的宽高比例，封面图片和视频保持一致，最好是可以截取视频的第一帧图像作为视频的封面。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/02/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-02T21:13:33+08:00" content="2016-05-02">
-              2016-05-02
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
           
         
@@ -979,7 +917,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
