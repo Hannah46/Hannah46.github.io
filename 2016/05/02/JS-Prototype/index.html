@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/59967359gw1eurz18tbpyj205f028dfp.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359jw1eurz9khcycj207d03ft8p.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359gw1eurz2d69eyj207802mdfs.jpg">
-<meta property="og:updated_time" content="2016-05-02T13:13:33.000Z">
+<meta property="og:updated_time" content="2016-11-01T01:59:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS原型链继承中的小玩意">
 <meta name="twitter:description" content="继承方法：1、原型链（主要）每个构造函数有一个prototype原型对象，prototype指向constructor，constructor中又包含了一个指向prototype的指针（好像有点循环），而实例有一个proto指向prototype。实现的本质是重写原型对象prototype，原本在SuperType中的属性和方法现在都存在于SubType.prototype中。SubType的原型">
@@ -104,7 +104,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -283,6 +283,7 @@
         <h2 id="继承方法："><a href="#继承方法：" class="headerlink" title="继承方法："></a>继承方法：</h2><h3 id="1、原型链（主要）"><a href="#1、原型链（主要）" class="headerlink" title="1、原型链（主要）"></a>1、原型链（主要）</h3><p>每个构造函数有一个prototype原型对象，prototype指向constructor，constructor中又包含了一个指向prototype的指针（好像有点循环），而实例有一个proto指向prototype。<br>实现的本质是重写原型对象prototype，原本在SuperType中的属性和方法现在都存在于SubType.prototype中。SubType的原型指向SuperType的实例，SuperType的实例又包含了一个指向prototype的指针（应该是proto）</p>
 <h3 id="2、最常用的是构造函数和原型链的组合"><a href="#2、最常用的是构造函数和原型链的组合" class="headerlink" title="2、最常用的是构造函数和原型链的组合"></a>2、最常用的是构造函数和原型链的组合</h3><p>原型链继承大家公共的方法和属性，构造函数继承实例的方法和属性。用法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">SubType</span></span>() &#123;</div><div class="line">  SuperType.call(this);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>单纯的构造函数的问题就在于方法都在SuperType中定义好了，不能复写了。</p>
+<a id="more"></a>
 <h2 id="继承后相关变量的变化"><a href="#继承后相关变量的变化" class="headerlink" title="继承后相关变量的变化"></a>继承后相关变量的变化</h2><p>看看下面这个代码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">SuperType</span></span>() &#123;</div><div class="line">  this.aa = 1;</div><div class="line">  this.colors = [<span class="string">'red'</span>, <span class="string">'white'</span>];</div><div class="line">&#125;</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">SubType</span></span>() &#123;</div><div class="line">  SubType.prototype = new SuperType();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var instance1 = new SubType();</div><div class="line">instance1.aa = 2;</div><div class="line">instance1.colors.push(<span class="string">'yellow'</span>);</div><div class="line"></div><div class="line">document.write(<span class="string">'instance1.aa='</span> + instance1.aa + <span class="string">'\n'</span> +</div><div class="line">                <span class="string">'instance1.colors='</span> + instance1.colors);</div><div class="line"></div><div class="line">var instance2 = new SubType();</div><div class="line">document.write(<span class="string">'instance2.aa='</span> + instance2.aa + <span class="string">'\n'</span> +</div><div class="line">                <span class="string">'instance2.colors='</span> + instance2.colors);</div></pre></td></tr></table></figure>
 <p>这里的输出结果是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">instance1.aa=2 instance1.colors=red,white,yellow</div><div class="line">instance2.aa=1 instance2.colors=red,white,yellow</div></pre></td></tr></table></figure></p>
@@ -397,7 +398,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://ww1.sinaimg.cn/large/59967359gw1f9cd8wwvbtj208v0a0gln.jpg"
                alt="Hannah He" />
           <p class="site-author-name" itemprop="name">Hannah He</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -477,7 +478,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -542,6 +543,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>

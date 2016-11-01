@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -94,7 +94,7 @@ ownership &amp;amp; 父子关系ownership：props和state是根据这种关系�
 ownership &amp;amp; 父子关系ownership：props和state是根据这种关系来传递数值，如果一个component在另一个component的render方法里定义，两者就存在ownership ，render">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/59967359gw1f802xei8ozj20xo0aktay.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1f802xojycyj20z20usafs.jpg">
-<meta property="og:updated_time" content="2016-09-20T07:24:55.000Z">
+<meta property="og:updated_time" content="2016-11-01T01:58:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React初体验">
 <meta name="twitter:description" content="components are just state machinescomponents只是 承载state的容器，通过state的变化来实现components的渲染
@@ -106,7 +106,7 @@ ownership &amp;amp; 父子关系ownership：props和state是根据这种关系�
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -285,6 +285,7 @@ ownership &amp;amp; 父子关系ownership：props和state是根据这种关系�
         <h3 id="components-are-just-state-machines"><a href="#components-are-just-state-machines" class="headerlink" title="components are just state machines"></a>components are just state machines</h3><p>components只是 承载state的容器，通过state的变化来实现components的渲染</p>
 <h3 id="ownership-amp-父子关系"><a href="#ownership-amp-父子关系" class="headerlink" title="ownership &amp; 父子关系"></a>ownership &amp; 父子关系</h3><p>ownership：props和state是根据这种关系来传递数值，如果一个component在另一个component的render方法里定义，两者就存在ownership ，render中传递的值是当前定义的元素的props中<br>     父子关系是指在类似dom树结构的两个元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Parent&gt;</div><div class="line">	&lt;Child /&gt;</div><div class="line">&lt;/Parent&gt;</div></pre></td></tr></table></figure></p>
 <p>在这种关系里，parent可以通过this.props.children来获取children 的 prop，也可以用 React.Children的相关操作对children进行操作</p>
+<a id="more"></a>
 <h3 id="react-dom操作的方式"><a href="#react-dom操作的方式" class="headerlink" title="react dom操作的方式"></a>react dom操作的方式</h3><p>react在操作dom上充分考虑了性能上的优化，比如<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Card&gt;</div><div class="line">     &lt;p&gt;Paragraph 1&lt;/p&gt;</div><div class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</div><div class="line">&lt;/Card&gt;</div></pre></td></tr></table></figure></p>
 <p>如果想要删除第一个p，react不会直接destory这个元素，因为这样会触发下面所有元素的repaint；react采用的方式是destory最后一个元素，然后改变上面所有元素的值。这样的做法只需要一次render，改变值的操作只是一个repaint的方式。尤其是对于list，n个元素只需要做1次render和n-1次repaint。</p>
 <p>但是有一种情况，就是当子元素的值是保存在state中的，这里最好不要采用destory的方式，因为当state发生改变时，会强制触发整个页面重新渲染，所以这时推荐的方式是将想要删除的元素display:none<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Card&gt;</div><div class="line">     &lt;pstyle=&#123;&#123;display:<span class="string">'none'</span>&#125;&#125;&gt;Paragraph 1&lt;/p&gt;</div><div class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</div><div class="line">&lt;/Card&gt;</div></pre></td></tr></table></figure></p>
@@ -428,7 +429,7 @@ ownership &amp;amp; 父子关系ownership：props和state是根据这种关系�
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://ww1.sinaimg.cn/large/59967359gw1f9cd8wwvbtj208v0a0gln.jpg"
                alt="Hannah He" />
           <p class="site-author-name" itemprop="name">Hannah He</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -508,7 +509,7 @@ ownership &amp;amp; 父子关系ownership：props和state是根据这种关系�
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -573,6 +574,13 @@ ownership &amp;amp; 父子关系ownership：props和state是根据这种关系�
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -96,7 +96,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -278,58 +278,14 @@
 
       
         
-          
-            <h3 id="components-are-just-state-machines"><a href="#components-are-just-state-machines" class="headerlink" title="components are just state machines"></a>components are just state machines</h3><p>components只是 承载state的容器，通过state的变化来实现components的渲染</p>
+          <h3 id="components-are-just-state-machines"><a href="#components-are-just-state-machines" class="headerlink" title="components are just state machines"></a>components are just state machines</h3><p>components只是 承载state的容器，通过state的变化来实现components的渲染</p>
 <h3 id="ownership-amp-父子关系"><a href="#ownership-amp-父子关系" class="headerlink" title="ownership &amp; 父子关系"></a>ownership &amp; 父子关系</h3><p>ownership：props和state是根据这种关系来传递数值，如果一个component在另一个component的render方法里定义，两者就存在ownership ，render中传递的值是当前定义的元素的props中<br>     父子关系是指在类似dom树结构的两个元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Parent&gt;</div><div class="line">	&lt;Child /&gt;</div><div class="line">&lt;/Parent&gt;</div></pre></td></tr></table></figure></p>
 <p>在这种关系里，parent可以通过this.props.children来获取children 的 prop，也可以用 React.Children的相关操作对children进行操作</p>
-<h3 id="react-dom操作的方式"><a href="#react-dom操作的方式" class="headerlink" title="react dom操作的方式"></a>react dom操作的方式</h3><p>react在操作dom上充分考虑了性能上的优化，比如<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Card&gt;</div><div class="line">     &lt;p&gt;Paragraph 1&lt;/p&gt;</div><div class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</div><div class="line">&lt;/Card&gt;</div></pre></td></tr></table></figure></p>
-<p>如果想要删除第一个p，react不会直接destory这个元素，因为这样会触发下面所有元素的repaint；react采用的方式是destory最后一个元素，然后改变上面所有元素的值。这样的做法只需要一次render，改变值的操作只是一个repaint的方式。尤其是对于list，n个元素只需要做1次render和n-1次repaint。</p>
-<p>但是有一种情况，就是当子元素的值是保存在state中的，这里最好不要采用destory的方式，因为当state发生改变时，会强制触发整个页面重新渲染，所以这时推荐的方式是将想要删除的元素display:none<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;Card&gt;</div><div class="line">     &lt;pstyle=&#123;&#123;display:<span class="string">'none'</span>&#125;&#125;&gt;Paragraph 1&lt;/p&gt;</div><div class="line">     &lt;p&gt;Paragraph 2&lt;/p&gt;</div><div class="line">&lt;/Card&gt;</div></pre></td></tr></table></figure></p>
-<p>当元素是一个list生成时，如果需要操作list中的元素，同时又要保存state中的数据，最好给每个元素都附上一个key值，React在遇到设置了key值的元素时，会重新安排或者直接销毁。注意key值不要写在render内的html元素上，而是写在owner的render方法里<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// WRONG!</div><div class="line">varListItemWrapper=React.createClass(&#123;</div><div class="line">     render:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&lt;li key=&#123;this.props.data.id&#125;&gt;&#123;this.props.data.text&#125;&lt;/li&gt;;</div><div class="line">     &#125;</div><div class="line">&#125;);</div><div class="line">var ListItemWrapper = React.createClass(&#123;</div><div class="line">     render:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&lt;li&gt;&#123;this.props.data.text&#125;&lt;/li&gt;;</div><div class="line">     &#125;&#125;);</div><div class="line">     varMyComponent=React.createClass(</div><div class="line">          &#123;render:<span class="function"><span class="title">function</span></span>()&#123;<span class="built_in">return</span>(</div><div class="line">               &lt;ul&gt;&#123;this.props.results.map(<span class="keyword">function</span>(result)&#123;</div><div class="line">                     <span class="built_in">return</span>&lt;ListItemWrapperkey=&#123;result.id&#125;data=&#123;result&#125;/&gt;;</div><div class="line">     &#125;)&#125;</div><div class="line">     &lt;/ul&gt;);</div><div class="line">&#125;&#125;);</div></pre></td></tr></table></figure></p>
-<h3 id="props"><a href="#props" class="headerlink" title="props"></a>props</h3><p>  owner组件与owned组件之间数据传输，是一种单向绑定。owned组件通过states来接收props传递的值<br>  如果需要判断是否改变数据，重写shouldComponentUpdate(),return false的时候不会做组件更新<br>尤其当数据量较大的时候，使用shouldComponentUpdate( )可以提升性能。<br>注意：</p>
-<ul>
-<li>初始化的render过程和调用forceUpdate( )时，都不会再调用shouldComponentUpdate()<br>当调用shouldComponentUpdate( )，元素的componentWillUpdate and componentDidUpdate不会调用。<br>   componentWillUpdate，当props或者state改变时，立刻触发，before rendering<br>   componentDidUpdate，当组件更新时，改变Dom节点<br>这些都是生命周期中的方法  </li>
-<li>shouldComponentUpdate( )存在数据的一致性问题，如果数据已经改变，但方法返回false，ui组件仍然不会同步更新，所以需要谨慎使用。</li>
-</ul>
-<h3 id="组件中可定义的方法"><a href="#组件中可定义的方法" class="headerlink" title="组件中可定义的方法"></a>组件中可定义的方法</h3><ul>
-<li>render：required，调用时会检查this.props &amp; this.state，返回一个单一的子元素。</li>
-<li>getInitialState：组件被添加前调用，返回值作为this.state的初始值</li>
-<li>getDefaultProps：class被创建时调用一次，之后被缓存，如果父组件未初始化props，则返回值作为props的初始值。因此在该方法调用时，取不到this.props，同时方法返回的复杂对象在实例之间是共享的，而不是复制的</li>
-<li>propTypes：检测传递给组件的props的数据类型<br><a href="https://facebook.github.io/react/docs/reusable-components.html" target="_blank" rel="external">propTypes</a></li>
-<li>mixins：不同的组件之间共享的设置，是一个array  mixins: [SetIntervalMixin]</li>
-<li>statics：class可以直接调用的静态方法，与props&amp;state无关，实例创建之前即可调用</li>
-<li>displayName：用于debug，其实是JSX转化的时候使用</li>
-</ul>
-<h3 id="生命周期（这个对于React来说相当重要）"><a href="#生命周期（这个对于React来说相当重要）" class="headerlink" title="生命周期（这个对于React来说相当重要）"></a>生命周期（这个对于React来说相当重要）</h3><p>1、Mount<br>     componentWillMount：client &amp; server均执行。render方法调用前立刻触发，setState在这个方法中调用，如果设置了setState，render会接收到更新的state值，然后只调用一次<br>     componentDidMount：only on client。render方法调用后立刻触发，在这个方法里获取refs绑定的子元素，调用过程中子元素先于父元素调用。引入其他js框架，设置计时器，发送ajax请求都在这个方法中做<br>2、Update(初始化的render过程都不会触发)<br>     componentWillReceiveProps：接收新的props调用，可能的调用场景：父元素通过setState改变子元素的props时调用，所有因为props改变而引发的操作都在这个方法里<br>props的旧值通过this.props调用，这时还没有完成改变的动作。<br>当props发生改变时会触发这个方法，但是并不可以在这个方法中检测props是否发生了改变，这并不是一个相互的过程。如果需要检测state的变化，可以用componentWillUpdate<br>     shouldComponentUpdate：接收到新的props和state之后，在render之前触发。<br>当props和state改变不需要刷新组件时，return false，render( )不会调用，componentWillUpdate和componentDidUpdate也都不会触发<br>     componentWillUpdate：接收到新props和states之后立刻触发，此时还未执行render<br>方法内不能使用setState( )，如果需要根据新的props修改state，需要在componentWillReceiveProps里<br>     componentDidUpdate：组件的变化传递到dom时立刻触发，这里可以执行DOM上的一些操作<br>     componentWillUnmount：组件从DOM中移除前立刻触发  </p>
-<h3 id="与ES6结合"><a href="#与ES6结合" class="headerlink" title="与ES6结合"></a>与ES6结合</h3><ul>
-<li>使用ES6 create class<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class HelloMessage extends React.Component &#123;</div><div class="line">     <span class="function"><span class="title">render</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&lt;div&gt;Hello&#123;this.props.name&#125;&lt;/div&gt;;</div><div class="line">     &#125;</div><div class="line">&#125;</div><div class="line">ReactDOM.render(&lt;HelloMessagename=<span class="string">"Sebastian"</span>/&gt;,mountNode);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这样引用也可以使用ES6的import   </p>
-<ul>
-<li>使用ES6创建的组件，不会自动绑定this，使用时<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div onClick=&#123;this.tick.bind(this)&#125;&gt;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>也可以在construtor里面使用.bind(this)，这样就可以在dom中直接使用this.xxx    </p>
-<ul>
-<li><p>… 扩展操作符<br>es6中的… 可以将一个对象展开，拆成若干个用，隔开的数据，外层包一个[ ]  则转化为了数组，外层包一个{ }则转化了对象<br>可以使用…来控制props中传递的值<br>var { checked, …other } = props;<br>这样props中就不会包括checked属性，如果又想要传递给内部的元素，可以使用显示的传递</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;input &#123;...other&#125;</div><div class="line">     checked=&#123;checked&#125;</div><div class="line">     className=&#123;fancyClass&#125;</div><div class="line">     <span class="built_in">type</span>=<span class="string">"checkbox"</span></div><div class="line">/&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>=&gt; 箭头操作符<br>相当于.bind(this)</p>
-</li>
-</ul>
-<h3 id="virtual-DOM"><a href="#virtual-DOM" class="headerlink" title="virtual DOM"></a>virtual DOM</h3><ul>
-<li>react中类似DOM中的东西（render 中构建的）都是virtual DOM，react会有一个虚拟试图（react browser），用来呈现virtual DOM，所有的更新都发生在virtual DOM上，之后react会采取效率最高的方式将virtual      DOM更新到真正的DOM上。react不直接操作DOM，所以效率很快   </li>
-<li>如果想要取到真正的DOM，可以给dom指定ref值<br>ref既可以绑定到真正的DOM节点上，返回一个DOM节点，也可以绑定在一个react组件上，返回的是一个React class。常用的场景是查找DOM<br>ref也可以是一个回调函数，当组件被挂载（mount）到dom节点中时立刻触发，被标记了ref的dom节点作为回调函数的参数  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">render: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    <span class="built_in">return</span> (</div><div class="line">      &lt;TextInput</div><div class="line">        ref=&#123;<span class="keyword">function</span>(input) &#123;</div><div class="line">          <span class="keyword">if</span> (input != null) &#123;</div><div class="line">            input.focus();</div><div class="line">          &#125;</div><div class="line">        &#125;&#125; /&gt;</div><div class="line">    );</div><div class="line">  &#125;,</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>也可以是个string，标识整个组件的backing instance<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;input ref=<span class="string">"myInput"</span> /&gt;</div><div class="line">var input = this.refs.myInput;</div><div class="line">var inputValue = input.value;</div><div class="line">var inputRect = input.getBoundingClientRect();</div></pre></td></tr></table></figure></p>
-<p>注意：ref不要使用在render方法中<br>  ref其实指向的是backing instance，所以不能给stateless的组件标记ref，因为stateless不存在backing instance</p>
-<h3 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h3><p>1、尽量不要在getInitialState中使用this.props<br>如果这样，可能会导致render中的this.state还没有拿到getInitialState中的值，导致数据不一致<br>最佳做法是直接在render中调用this.props，而不要 使用this.state<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// bad</div><div class="line">var MessageBox = React.createClass(&#123;</div><div class="line">     getInitialState:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span>&#123; nameWithQualifier:<span class="string">'Mr. '</span>+this.props.name&#125;;</div><div class="line">     &#125;,</div><div class="line">     render:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span> &lt;div&gt;&#123; this.state.nameWithQualifier&#125;&lt;/div&gt;;</div><div class="line">     &#125;</div><div class="line">&#125;);</div><div class="line">ReactDOM.render(&lt;MessageBoxname=<span class="string">"Rogers"</span>/&gt;,mountNode);</div><div class="line">// better</div><div class="line">var MessageBox = React.createClass(&#123;</div><div class="line">     render:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">          <span class="built_in">return</span> &lt;div&gt;&#123; <span class="string">'Mr. '</span>+this.props.name &#125;&lt;/div&gt;;</div><div class="line">     &#125;</div><div class="line">&#125;);</div><div class="line">ReactDOM.render(&lt;MessageBoxname=<span class="string">"Rogers"</span>/&gt;,mountNode);</div></pre></td></tr></table></figure></p>
-<p>2、this.props.children       当有多个子组件时，会返回一个array，但当只有一个的时候，不会是一个array<br>3、如果在初始化组件时，是通过ajax请求拿到的数据，要在组件unmount的时候终止所有的请求<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">componentDidMount: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">     this.serverRequest=$.get(this.props.source,<span class="keyword">function</span>(result)&#123;</div><div class="line">          var lastGist=result[0];</div><div class="line">          this.setState(&#123;</div><div class="line">               username:lastGist.owner.login,</div><div class="line">               lastGistUrl:lastGist.html_url</div><div class="line">          &#125;);</div><div class="line">     &#125;.bind(this));</div><div class="line">&#125;,</div><div class="line">componentWillUnmount:<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">     this.serverRequest.abort();</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
-<p>4、通过给子元素指定ref，可以直接在父元素中通过this.refs.(ref的值)取到子元素，然后直接调用子元素中的方法<br><img src="http://ww3.sinaimg.cn/large/59967359gw1f802xei8ozj20xo0aktay.jpg" alt=""><br><img src="http://ww2.sinaimg.cn/large/59967359gw1f802xojycyj20z20usafs.jpg" alt=""></p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/27/react-first-sight/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -420,15 +376,14 @@
 
       
         
-          
-            <h2 id="格式问题"><a href="#格式问题" class="headerlink" title="格式问题"></a>格式问题</h2><p>video标签能够支持的格式有限，通常为mp4, webm, ogg这三种视频格式，可以通过列举多个视频格式预防某个视频文件出问题，但是这样同样也会出现视频多余加载的问题，推荐还是使用MP4，但需要注意的是，在大部分浏览器中（PC和移动端均存在），只能识别编码格式为H.264的编码格式，其他的编码格式浏览器不能正常解析，Chrome中会出现白屏（播放有声音但无图像），火狐上会提示“文件已损坏”。</p>
+          <h2 id="格式问题"><a href="#格式问题" class="headerlink" title="格式问题"></a>格式问题</h2><p>video标签能够支持的格式有限，通常为mp4, webm, ogg这三种视频格式，可以通过列举多个视频格式预防某个视频文件出问题，但是这样同样也会出现视频多余加载的问题，推荐还是使用MP4，但需要注意的是，在大部分浏览器中（PC和移动端均存在），只能识别编码格式为H.264的编码格式，其他的编码格式浏览器不能正常解析，Chrome中会出现白屏（播放有声音但无图像），火狐上会提示“文件已损坏”。</p>
 <p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3pcey8tagj20cn09w751.jpg" alt="firefox error"></p>
 <h2 id="封面问题"><a href="#封面问题" class="headerlink" title="封面问题"></a>封面问题</h2><p>如果视频加载成功，video自带的封面图会根据视频的宽高进行缩放，如果视频加载失败，则会根据图片的尺寸显示出播放区域</p>
-<p><img src="http://ww3.sinaimg.cn/large/59967359gw1f3pcdlp82bj20ae06amxq.jpg" alt="correct show"></p>
-<p><img src="http://ww1.sinaimg.cn/large/59967359gw1f3pce5av9ej20an0agabf.jpg" alt="wrong show"></p>
-<p>最好用一个统一的封面加一个播放按钮，将视频隐藏，这里最好能把video标签用1px * 1px来隐藏，而不要display:none，因此display:none不会将视频激活，后续加载可能会耗时过长。不过这个有一个问题就是必须规定好视频的宽高比例，封面图片和视频保持一致，最好是可以截取视频的第一帧图像作为视频的封面。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/10/h5-video/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -519,20 +474,18 @@
 
       
         
-          
-            <p>JS中函数调用时会接收两个参数，this &amp; arguments，有4种调用方式，四种方式的区别在于this不同。</p>
+          <p>JS中函数调用时会接收两个参数，this &amp; arguments，有4种调用方式，四种方式的区别在于this不同。</p>
 <h2 id="方法模式"><a href="#方法模式" class="headerlink" title="方法模式"></a>方法模式</h2><p>将函数作为一个对象的属性，即为一个方法。调用时，通过对象来调用。这里的this是该对象。</p>
 <p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hc778u1lj207g042aa2.jpg" alt="call1"></p>
 <p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3hc7wbac6j204v01rq2u.jpg" alt="call1 result"></p>
 <h2 id="函数模式"><a href="#函数模式" class="headerlink" title="函数模式"></a>函数模式</h2><p>直接调用某个函数，this是全局对象window</p>
 <p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hcak6o62j2088049q30.jpg" alt="call2"></p>
 <p><img src="http://ww3.sinaimg.cn/large/59967359gw1f3hcbpxgjrj20840443z5.jpg" alt="call2 result"></p>
-<h2 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h2><p>用new func()的方式来调用函数，实际是创建了一个连接到该函数的prototype成员的新对象。这里的this是函数自己。</p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hccz50sqj208v05174i.jpg" alt="call3"></p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hcdj050zj207h02hjrg.jpg" alt="call3 result"></p>
-<h2 id="Apply调用模式"><a href="#Apply调用模式" class="headerlink" title="Apply调用模式"></a>Apply调用模式</h2><p>也可以用call，参数不同而已，apply是数组，call是一个逐个列出<br>apply允许设置this，即使对象并没有这个方法，仍然可以通过apply指定作用域，然后在某个对象上调用这个方法。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/02/JS-function-calls/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -623,20 +576,16 @@
 
       
         
-          
-            <h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>JS执行是单线程的，但是Node底层有一个线程池，使用多线程来实现异步I/O。</p>
+          <h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>JS执行是单线程的，但是Node底层有一个线程池，使用多线程来实现异步I/O。</p>
 <p><img src="http://ww1.sinaimg.cn/large/59967359gw1f3hbss9mssj207l05yt8o.jpg" alt="nodeio"></p>
 <h2 id="几大要素"><a href="#几大要素" class="headerlink" title="几大要素"></a>几大要素</h2><p>事件循环、观察者、请求对象、I/O线程池。</p>
 <h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><p>进程启动，会创建一个while(true)的事件循环，每次是一个Tick，每个Tick就是查看是否有事件待处理，有事件则取出事件及回调，执行回调，没有则退出进程。</p>
 <p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3hbuo2qpej20am0c00tf.jpg" alt="event loop"></p>
-<h3 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h3><p>事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是进程询问时才返回结果。<br>事件循环是生产者/消费者模型。异步I/O和网络请求是事件的生产者，这些事件被输送到观察者，事件循环是消费者，从观察者这里取出事件处理。观察者就相当于模型中的缓冲区，生产者不断产生事件放到缓冲区，而消费者从缓冲区里取出事件进行消费。</p>
-<h3 id="请求对象"><a href="#请求对象" class="headerlink" title="请求对象"></a>请求对象</h3><p>Node底层实现异步I\O，依赖请求对象。<br>假设fs.open()，根据指定路径和参数打开文件，整个调用过程：</p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hbwg24ylj20dl0d73zk.jpg" alt="request object"></p>
-<p>请求对象就在libuv这个过程创建，传入参数和当前方法都包含在这个对象中，然后再将改对象推入进程池中。<br>JS层面的请求会立即返回，继续执行后续的操作，而上面的操作都是在node层进行的，这个打开文件的请求会依赖请求对象在线程池中等待执行，执行完毕后执行相应的回调函数，而JS执行线程并不关心下面线程池里发生的事，当前的I/O操作不管是否阻塞I/O，都不会影响JS执行线程的执行，这就是异步。<br>总之，JS执行线程是单线程，而NODE底层有个线程池，这里进行多线程使用事件循环，实现异步I/O。请求对象既包括异步I/O的所有状态，从送入线程池到I/O操作后执行的回调。</p>
-<h3 id="执行回调"><a href="#执行回调" class="headerlink" title="执行回调"></a>执行回调</h3><p>送入线程池是第一步，调用回调是第二步。关键是事件循环<br>I/O执行结束后，会将结果通知IOCP（windows下,linux下epoll），并将线程归还线程池。使用事件循环的I/O观察者，如果有已经执行完的I/O，则将请求对象加入I/O观察者队列中，事件循环再Tick过程中，检测到有I/O观察者，则取出其中的请求对象，再取出请求对象中的回调函数执行。</p>
-<p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3hbxyctd8j20la0e740v.jpg" alt="do callback"></p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/02/Node-I／O/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -830,29 +779,14 @@
 
       
         
-          
-            <h2 id="继承方法："><a href="#继承方法：" class="headerlink" title="继承方法："></a>继承方法：</h2><h3 id="1、原型链（主要）"><a href="#1、原型链（主要）" class="headerlink" title="1、原型链（主要）"></a>1、原型链（主要）</h3><p>每个构造函数有一个prototype原型对象，prototype指向constructor，constructor中又包含了一个指向prototype的指针（好像有点循环），而实例有一个proto指向prototype。<br>实现的本质是重写原型对象prototype，原本在SuperType中的属性和方法现在都存在于SubType.prototype中。SubType的原型指向SuperType的实例，SuperType的实例又包含了一个指向prototype的指针（应该是proto）</p>
+          <h2 id="继承方法："><a href="#继承方法：" class="headerlink" title="继承方法："></a>继承方法：</h2><h3 id="1、原型链（主要）"><a href="#1、原型链（主要）" class="headerlink" title="1、原型链（主要）"></a>1、原型链（主要）</h3><p>每个构造函数有一个prototype原型对象，prototype指向constructor，constructor中又包含了一个指向prototype的指针（好像有点循环），而实例有一个proto指向prototype。<br>实现的本质是重写原型对象prototype，原本在SuperType中的属性和方法现在都存在于SubType.prototype中。SubType的原型指向SuperType的实例，SuperType的实例又包含了一个指向prototype的指针（应该是proto）</p>
 <h3 id="2、最常用的是构造函数和原型链的组合"><a href="#2、最常用的是构造函数和原型链的组合" class="headerlink" title="2、最常用的是构造函数和原型链的组合"></a>2、最常用的是构造函数和原型链的组合</h3><p>原型链继承大家公共的方法和属性，构造函数继承实例的方法和属性。用法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">SubType</span></span>() &#123;</div><div class="line">  SuperType.call(this);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>单纯的构造函数的问题就在于方法都在SuperType中定义好了，不能复写了。</p>
-<h2 id="继承后相关变量的变化"><a href="#继承后相关变量的变化" class="headerlink" title="继承后相关变量的变化"></a>继承后相关变量的变化</h2><p>看看下面这个代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">SuperType</span></span>() &#123;</div><div class="line">  this.aa = 1;</div><div class="line">  this.colors = [<span class="string">'red'</span>, <span class="string">'white'</span>];</div><div class="line">&#125;</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">SubType</span></span>() &#123;</div><div class="line">  SubType.prototype = new SuperType();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var instance1 = new SubType();</div><div class="line">instance1.aa = 2;</div><div class="line">instance1.colors.push(<span class="string">'yellow'</span>);</div><div class="line"></div><div class="line">document.write(<span class="string">'instance1.aa='</span> + instance1.aa + <span class="string">'\n'</span> +</div><div class="line">                <span class="string">'instance1.colors='</span> + instance1.colors);</div><div class="line"></div><div class="line">var instance2 = new SubType();</div><div class="line">document.write(<span class="string">'instance2.aa='</span> + instance2.aa + <span class="string">'\n'</span> +</div><div class="line">                <span class="string">'instance2.colors='</span> + instance2.colors);</div></pre></td></tr></table></figure>
-<p>这里的输出结果是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">instance1.aa=2 instance1.colors=red,white,yellow</div><div class="line">instance2.aa=1 instance2.colors=red,white,yellow</div></pre></td></tr></table></figure></p>
-<p>这里会发现colors改变了，但是aa并没有改变。我们看看instance1和instance2里都有什么东西</p>
-<p><img src="http://ww3.sinaimg.cn/large/59967359gw1eurz18tbpyj205f028dfp.jpg" alt="instance内部结构"></p>
-<p>如果我们把instance1的操作改成</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var instance1 = new SubType();</div><div class="line">instance1.aa = 2;</div><div class="line">instance1.colors = [<span class="string">'red'</span>, <span class="string">'white'</span>, <span class="string">'yellow'</span>];</div></pre></td></tr></table></figure>
-<p>这里的输出结果是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">instance1.aa=2 instance1.colors=red,white,yellow</div><div class="line">instance2.aa=1 instance2.colors=red,white,yellow</div></pre></td></tr></table></figure></p>
-<p>好神奇！colors又不改变了！</p>
-<p>再看看这时候两个是啥样子：</p>
-<p><img src="http://ww4.sinaimg.cn/large/59967359jw1eurz9khcycj207d03ft8p.jpg" alt="instance内部结构2"></p>
-<p>如果我们再改一下操作<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var instance1 = new SubType();</div><div class="line">SubType.prototype.aa = 2;</div></pre></td></tr></table></figure></p>
-<p>这里输出结果果然是instance1和instance2的aa值都变成了2。</p>
-<p>最后再看看这两个这时候是什么样子：<br><img src="http://ww4.sinaimg.cn/large/59967359gw1eurz2d69eyj207802mdfs.jpg" alt="instance内部结构2"></p>
-<p>我们终于发现了问题！</p>
-<p>继承后创建的实例对于引用类型和基本类型的操作貌似是不太一样的，对于基础类型，不管是赋值操作还是直接＋＋这样的操作，都会在实例中创建一个自己的属性，不会影响到原型，所以也就不用影响到其他的实例。如果想要影响所有实例，必须通过SubType.prototype来修改。</p>
-<p>但对于引用类型，如果直接调用引用类型自己的方法，不会创建自己的属性，会通过原型链回溯，因此就修改到了子类型的原型上去了，其他实例也会跟着影响。而如果通过赋值的方式，则会创建一个自己的属性。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/02/JS-Prototype/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -912,7 +846,7 @@
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://ww1.sinaimg.cn/large/59967359gw1f9cd8wwvbtj208v0a0gln.jpg"
                alt="Hannah He" />
           <p class="site-author-name" itemprop="name">Hannah He</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -981,7 +915,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -1046,6 +980,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
 
