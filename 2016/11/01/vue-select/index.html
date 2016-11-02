@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript," />
+  <meta name="keywords" content="javascript vue," />
 
 
 
@@ -84,35 +84,19 @@
 
 
 
-<meta name="description" content="JS中函数调用时会接收两个参数，this &amp;amp; arguments，有4种调用方式，四种方式的区别在于this不同。
-方法模式将函数作为一个对象的属性，即为一个方法。调用时，通过对象来调用。这里的this是该对象。
-
-
-函数模式直接调用某个函数，this是全局对象window">
+<meta name="description" content="vue2.0初体验vue已经大火了很久，尤其是在2.0横空出世之后，加了virtual DOM和ssr（哎？都是ssr）的vue感觉又强大了许多。特此奉上知乎专栏上尤雨溪对于vue2.0的介绍，以及勾股的分析，如果大家感兴趣，可以看一看尤雨溪－Announcing Vue.js 2.0勾股－Code Review for Vue 2.0 Preview
+vue2.0的componentvue2.0">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中4种function调用方法">
-<meta property="og:url" content="http://yoursite.com/2016/05/02/JS-function-calls/index.html">
+<meta property="og:title" content="使用vue2.0编写的一个下拉框组件">
+<meta property="og:url" content="http://yoursite.com/2016/11/01/vue-select/index.html">
 <meta property="og:site_name" content="盆老板的烧饼铺">
-<meta property="og:description" content="JS中函数调用时会接收两个参数，this &amp;amp; arguments，有4种调用方式，四种方式的区别在于this不同。
-方法模式将函数作为一个对象的属性，即为一个方法。调用时，通过对象来调用。这里的this是该对象。
-
-
-函数模式直接调用某个函数，this是全局对象window">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1f3hc778u1lj207g042aa2.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359gw1f3hc7wbac6j204v01rq2u.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1f3hcak6o62j2088049q30.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/59967359gw1f3hcbpxgjrj20840443z5.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1f3hccz50sqj208v05174i.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1f3hcdj050zj207h02hjrg.jpg">
-<meta property="og:updated_time" content="2016-11-01T01:58:57.000Z">
+<meta property="og:description" content="vue2.0初体验vue已经大火了很久，尤其是在2.0横空出世之后，加了virtual DOM和ssr（哎？都是ssr）的vue感觉又强大了许多。特此奉上知乎专栏上尤雨溪对于vue2.0的介绍，以及勾股的分析，如果大家感兴趣，可以看一看尤雨溪－Announcing Vue.js 2.0勾股－Code Review for Vue 2.0 Preview
+vue2.0的componentvue2.0">
+<meta property="og:updated_time" content="2016-11-02T03:25:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中4种function调用方法">
-<meta name="twitter:description" content="JS中函数调用时会接收两个参数，this &amp;amp; arguments，有4种调用方式，四种方式的区别在于this不同。
-方法模式将函数作为一个对象的属性，即为一个方法。调用时，通过对象来调用。这里的this是该对象。
-
-
-函数模式直接调用某个函数，this是全局对象window">
-<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/59967359gw1f3hc778u1lj207g042aa2.jpg">
+<meta name="twitter:title" content="使用vue2.0编写的一个下拉框组件">
+<meta name="twitter:description" content="vue2.0初体验vue已经大火了很久，尤其是在2.0横空出世之后，加了virtual DOM和ssr（哎？都是ssr）的vue感觉又强大了许多。特此奉上知乎专栏上尤雨溪对于vue2.0的介绍，以及勾股的分析，如果大家感兴趣，可以看一看尤雨溪－Announcing Vue.js 2.0勾股－Code Review for Vue 2.0 Preview
+vue2.0的componentvue2.0">
 
 
 
@@ -133,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/02/JS-function-calls/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/01/vue-select/"/>
 
-  <title> JS中4种function调用方法 | 盆老板的烧饼铺 </title>
+  <title> 使用vue2.0编写的一个下拉框组件 | 盆老板的烧饼铺 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +239,7 @@
             
             
               
-                JS中4种function调用方法
+                使用vue2.0编写的一个下拉框组件
               
             
           </h1>
@@ -267,8 +251,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-02T20:55:16+08:00" content="2016-05-02">
-              2016-05-02
+            <time itemprop="dateCreated" datetime="2016-11-01T19:09:48+08:00" content="2016-11-01">
+              2016-11-01
             </time>
           </span>
 
@@ -295,18 +279,13 @@
       
 
       
-        <p>JS中函数调用时会接收两个参数，this &amp; arguments，有4种调用方式，四种方式的区别在于this不同。</p>
-<h2 id="方法模式"><a href="#方法模式" class="headerlink" title="方法模式"></a>方法模式</h2><p>将函数作为一个对象的属性，即为一个方法。调用时，通过对象来调用。这里的this是该对象。</p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hc778u1lj207g042aa2.jpg" alt="call1"></p>
-<p><img src="http://ww4.sinaimg.cn/large/59967359gw1f3hc7wbac6j204v01rq2u.jpg" alt="call1 result"></p>
-<h2 id="函数模式"><a href="#函数模式" class="headerlink" title="函数模式"></a>函数模式</h2><p>直接调用某个函数，this是全局对象window</p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hcak6o62j2088049q30.jpg" alt="call2"></p>
-<p><img src="http://ww3.sinaimg.cn/large/59967359gw1f3hcbpxgjrj20840443z5.jpg" alt="call2 result"></p>
+        <h2 id="vue2-0初体验"><a href="#vue2-0初体验" class="headerlink" title="vue2.0初体验"></a>vue2.0初体验</h2><p>vue已经大火了很久，尤其是在2.0横空出世之后，加了virtual DOM和ssr（哎？都是ssr）的vue感觉又强大了许多。特此奉上知乎专栏上尤雨溪对于vue2.0的介绍，以及勾股的分析，如果大家感兴趣，可以看一看<br><a href="https://zhuanlan.zhihu.com/p/20814761" target="_blank" rel="external">尤雨溪－Announcing Vue.js 2.0</a><br><a href="http://jiongks.name/blog/code-review-for-vue-next/" target="_blank" rel="external">勾股－Code Review for Vue 2.0 Preview</a></p>
+<h2 id="vue2-0的component"><a href="#vue2-0的component" class="headerlink" title="vue2.0的component"></a>vue2.0的component</h2><p>vue2.0官网的guide写的很赞，通俗易懂。<br>一般component有两种方式，一种是全局组件(global component)，一种是实例化组件</p>
 <a id="more"></a>
-<h2 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h2><p>用new func()的方式来调用函数，实际是创建了一个连接到该函数的prototype成员的新对象。这里的this是函数自己。</p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hccz50sqj208v05174i.jpg" alt="call3"></p>
-<p><img src="http://ww2.sinaimg.cn/large/59967359gw1f3hcdj050zj207h02hjrg.jpg" alt="call3 result"></p>
-<h2 id="Apply调用模式"><a href="#Apply调用模式" class="headerlink" title="Apply调用模式"></a>Apply调用模式</h2><p>也可以用call，参数不同而已，apply是数组，call是一个逐个列出<br>apply允许设置this，即使对象并没有这个方法，仍然可以通过apply指定作用域，然后在某个对象上调用这个方法。</p>
+<h3 id="全局组件"><a href="#全局组件" class="headerlink" title="全局组件"></a>全局组件</h3><p>全局组件通过Vue.component( )注册为一个组件，可以通过<component></component>直接在html中调用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div class=<span class="string">"line-basic area"</span> id=<span class="string">"area"</span>&gt;</div><div class="line">    &lt;country-select&gt;&lt;/country-select&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>这种方式不需要在每个页面中实例化，直接相当于dom使用就可以，也可以将某个Vue类注册为组件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'country-select'</span>, &#123;</div><div class="line">  template: template,</div><div class="line">  data: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    <span class="built_in">return</span> &#123;</div><div class="line">      hideOpts: <span class="literal">true</span>,</div><div class="line">      isLogin: this.isLogin || <span class="literal">false</span>,</div><div class="line">      showValue: this.isLogin ? <span class="string">'+86'</span> : <span class="string">'中国+86'</span>,</div><div class="line">      isOverLength: <span class="literal">false</span>,</div><div class="line">      options: &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="实例化组件"><a href="#实例化组件" class="headerlink" title="实例化组件"></a>实例化组件</h3><p>通过Vue.extend( {} )来创建一个Vue的子类，内部的处理和全局组件类似。在需要使用的时候，通过实例化一个对象再挂载到相应的dom节点上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var CountrySelectVue = Vue.extend(&#123;</div><div class="line">  template: template,</div><div class="line">  data: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">    <span class="built_in">return</span> &#123;</div><div class="line">      hideOpts: <span class="literal">true</span>,</div><div class="line">      isLogin: this.isLogin || <span class="literal">false</span>,</div><div class="line">      showValue: this.isLogin ? <span class="string">'+86'</span> : <span class="string">'中国+86'</span>,</div><div class="line">      isOverLength: <span class="literal">false</span>,</div><div class="line">      options: &#123;&#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// two ways to mount a component</div><div class="line">new CountrySelectVue(&#123; el: <span class="string">'#area-content'</span> &#125;)</div><div class="line">new CountrySelectVue().<span class="variable">$mount</span>(<span class="string">'#area-content'</span>)</div></pre></td></tr></table></figure></p>
+<p>挂载时，这两种方式都可以，但是这里要注意的是，这里并不是简单挂载在dom节点的子元素，而是替换掉这个dom元素，组件挂载成功后，该元素就不存在了。</p>
 
       
     </div>
@@ -329,7 +308,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/javascript/" rel="tag">#javascript</a>
+            <a href="/tags/javascript-vue/" rel="tag">#javascript vue</a>
           
         </div>
       
@@ -338,17 +317,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/02/Node-I／O/" rel="next" title="Node中的异步I／O">
-                <i class="fa fa-chevron-left"></i> Node中的异步I／O
+              <a href="/2016/08/27/react-first-sight/" rel="next" title="React初体验">
+                <i class="fa fa-chevron-left"></i> React初体验
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/10/h5-video/" rel="prev" title="H5中的video标签">
-                H5中的video标签 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -455,7 +430,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法模式"><span class="nav-number">1.</span> <span class="nav-text">方法模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数模式"><span class="nav-number">2.</span> <span class="nav-text">函数模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数模式"><span class="nav-number">3.</span> <span class="nav-text">构造函数模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apply调用模式"><span class="nav-number">4.</span> <span class="nav-text">Apply调用模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue2-0初体验"><span class="nav-number">1.</span> <span class="nav-text">vue2.0初体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue2-0的component"><span class="nav-number">2.</span> <span class="nav-text">vue2.0的component</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局组件"><span class="nav-number">2.1.</span> <span class="nav-text">全局组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化组件"><span class="nav-number">2.2.</span> <span class="nav-text">实例化组件</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
