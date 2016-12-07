@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="extends自定义组件针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。比如下面这两个页面这两个页面公用相同的接口，只是页面的标题和item的初始化数组不同，拆分页面可以把页面分为图中的几个部分比较明确的是需要将item元祖抽离成一个组件，但页面主体的items可以通过通用组件的方式实现，也可以通过extends基类的方式">
+<meta name="description" content="extends自定义组件针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。比如下面这两个页面">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react中的extends">
 <meta property="og:url" content="http://yoursite.com/2016/11/30/react-extends/index.html">
 <meta property="og:site_name" content="盆老板的烧饼铺">
-<meta property="og:description" content="extends自定义组件针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。比如下面这两个页面这两个页面公用相同的接口，只是页面的标题和item的初始化数组不同，拆分页面可以把页面分为图中的几个部分比较明确的是需要将item元祖抽离成一个组件，但页面主体的items可以通过通用组件的方式实现，也可以通过extends基类的方式">
+<meta property="og:description" content="extends自定义组件针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。比如下面这两个页面">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/59967359gw1fa9xso3cdnj21kw0tv77y.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1fa9xtczwqxj21kw0ucn1u.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/59967359gw1fa9y7zwo40j21kw0tvth1.jpg">
-<meta property="og:updated_time" content="2016-11-30T05:53:23.000Z">
+<meta property="og:updated_time" content="2016-12-07T14:27:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react中的extends">
-<meta name="twitter:description" content="extends自定义组件针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。比如下面这两个页面这两个页面公用相同的接口，只是页面的标题和item的初始化数组不同，拆分页面可以把页面分为图中的几个部分比较明确的是需要将item元祖抽离成一个组件，但页面主体的items可以通过通用组件的方式实现，也可以通过extends基类的方式">
+<meta name="twitter:description" content="extends自定义组件针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。比如下面这两个页面">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/59967359gw1fa9xso3cdnj21kw0tv77y.jpg">
 
 
@@ -280,8 +280,9 @@
       
 
       
-        <h2 id="extends自定义组件"><a href="#extends自定义组件" class="headerlink" title="extends自定义组件"></a>extends自定义组件</h2><p>针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。<br>比如下面这两个页面<br><img src="http://ww1.sinaimg.cn/large/59967359gw1fa9xso3cdnj21kw0tv77y.jpg" alt="页面1"><br><img src="http://ww2.sinaimg.cn/large/59967359gw1fa9xtczwqxj21kw0ucn1u.jpg" alt="页面2"><br>这两个页面公用相同的接口，只是页面的标题和item的初始化数组不同，拆分页面可以把页面分为图中的几个部分<br><img src="http://ww3.sinaimg.cn/large/59967359gw1fa9y7zwo40j21kw0tvth1.jpg" alt="页面结构"><br>比较明确的是需要将item元祖抽离成一个组件，但页面主体的items可以通过通用组件的方式实现，也可以通过extends基类的方式实现。   </p>
+        <h2 id="extends自定义组件"><a href="#extends自定义组件" class="headerlink" title="extends自定义组件"></a>extends自定义组件</h2><p>针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。<br>比如下面这两个页面<br><img src="http://ww1.sinaimg.cn/large/59967359gw1fa9xso3cdnj21kw0tv77y.jpg" alt="页面1"></p>
 <a id="more"></a>
+<p><img src="http://ww2.sinaimg.cn/large/59967359gw1fa9xtczwqxj21kw0ucn1u.jpg" alt="页面2"><br>这两个页面公用相同的接口，只是页面的标题和item的初始化数组不同，拆分页面可以把页面分为图中的几个部分<br><img src="http://ww3.sinaimg.cn/large/59967359gw1fa9y7zwo40j21kw0tvth1.jpg" alt="页面结构"><br>比较明确的是需要将item元祖抽离成一个组件，但页面主体的items可以通过通用组件的方式实现，也可以通过extends基类的方式实现。   </p>
 <p>首先讲一下两种方法的具体实现过程</p>
 <h3 id="通用组件方式"><a href="#通用组件方式" class="headerlink" title="通用组件方式"></a>通用组件方式</h3><p>将页面主体items作为一个通用组件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseConfig</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">static</span> propTypes = &#123;</div><div class="line">    configData: PropTypes.array.isRequired  <span class="comment">// 配置的item信息</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props)</div><div class="line">    <span class="keyword">this</span>.state = &#123;</div><div class="line">      configs:[]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 中间省略了若干方法</span></div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;div&gt;</div><div class="line">        &#123; this.state.configs.map(item =&gt; &lt;Item key=&#123;item.key&#125; item=&#123;item&#125; onUpdate=&#123;this.updateConfig&#125;  /&gt;)&#125;</div><div class="line">      &lt;/div&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在页面中可以直接引用组件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Config</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props)</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;div&gt;</div><div class="line">        &lt;div&gt;&lt;strong&gt;APP各项功能的配置页面。谨慎修改。&lt;/strong&gt;&lt;/div&gt;</div><div class="line">        &lt;BaseConfig configData=&#123;CONFIG_DATA&#125;&gt;&lt;/BaseConfig&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
