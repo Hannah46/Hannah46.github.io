@@ -235,6 +235,102 @@
             
               
                 
+                <a class="post-title-link" href="/2016/11/30/react-extends/" itemprop="url">
+                  react中的extends
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-30T10:37:20+08:00" content="2016-11-30">
+              2016-11-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="extends自定义组件"><a href="#extends自定义组件" class="headerlink" title="extends自定义组件"></a>extends自定义组件</h2><p>针对自定义组件，有些场景会使用父子组件的模式，有些场景会使用继承的模式，很多场景两者都可以实现，但是选择使用时，仍然有偏好。<br>比如下面这两个页面<br><img src="http://ww1.sinaimg.cn/large/59967359gw1fa9xso3cdnj21kw0tv77y.jpg" alt="页面1"><br><img src="http://ww2.sinaimg.cn/large/59967359gw1fa9xtczwqxj21kw0ucn1u.jpg" alt="页面2"><br>这两个页面公用相同的接口，只是页面的标题和item的初始化数组不同，拆分页面可以把页面分为图中的几个部分<br><img src="http://ww3.sinaimg.cn/large/59967359gw1fa9y7zwo40j21kw0tvth1.jpg" alt="页面结构"><br>比较明确的是需要将item元祖抽离成一个组件，但页面主体的items可以通过通用组件的方式实现，也可以通过extends基类的方式实现。   </p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/30/react-extends/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/11/01/vue-select/" itemprop="url">
                   使用vue2.0编写的一个下拉框组件
                 </a>
@@ -332,7 +428,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/08/27/react-first-sight/" itemprop="url">
+                <a class="post-title-link" href="/2016/09/27/react-first-sight/" itemprop="url">
                   React初体验
                 </a>
               
@@ -346,8 +442,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-27T23:11:24+08:00" content="2016-08-27">
-              2016-08-27
+            <time itemprop="dateCreated" datetime="2016-09-27T19:27:14+08:00" content="2016-09-27">
+              2016-09-27
             </time>
           </span>
 
@@ -379,7 +475,7 @@
 <h3 id="ownership-amp-父子关系"><a href="#ownership-amp-父子关系" class="headerlink" title="ownership &amp; 父子关系"></a>ownership &amp; 父子关系</h3><p>ownership：props和state是根据这种关系来传递数值，如果一个component在另一个component的render方法里定义，两者就存在ownership ，render中传递的值是当前定义的元素的props中<br>     父子关系是指在类似dom树结构的两个元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Parent&gt;</div><div class="line">	&lt;Child /&gt;</div><div class="line">&lt;/Parent&gt;</div></pre></td></tr></table></figure></p>
 <p>在这种关系里，parent可以通过this.props.children来获取children 的 prop，也可以用 React.Children的相关操作对children进行操作</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/27/react-first-sight/#more" rel="contents">
+            <a class="btn" href="/2016/09/27/react-first-sight/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -951,7 +1047,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
