@@ -1,0 +1,592 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="webpack," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近开始学习webpack，本篇文章中的例子主要了参考webpack官网的指南。
+准备工作使用webpack需要安装npm和node，这里我使用的是node v6.9.2 &amp;amp; npm v3.10.3
+初始化一个项目1.新建一个名为webpack的文件夹，创建两个目录 bin和src12mkdir binmkdir src
+2.为项目安装webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack学习笔记">
+<meta property="og:url" content="http://yoursite.com/2016/12/09/webpack-learning-1/index.html">
+<meta property="og:site_name" content="盆老板的烧饼铺">
+<meta property="og:description" content="最近开始学习webpack，本篇文章中的例子主要了参考webpack官网的指南。
+准备工作使用webpack需要安装npm和node，这里我使用的是node v6.9.2 &amp;amp; npm v3.10.3
+初始化一个项目1.新建一个名为webpack的文件夹，创建两个目录 bin和src12mkdir binmkdir src
+2.为项目安装webpack">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359gw1fakkllpcnaj207i038q2q.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1fakl0oer1oj20e906ldgt.jpg">
+<meta property="og:updated_time" content="2016-12-10T01:54:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack学习笔记">
+<meta name="twitter:description" content="最近开始学习webpack，本篇文章中的例子主要了参考webpack官网的指南。
+准备工作使用webpack需要安装npm和node，这里我使用的是node v6.9.2 &amp;amp; npm v3.10.3
+初始化一个项目1.新建一个名为webpack的文件夹，创建两个目录 bin和src12mkdir binmkdir src
+2.为项目安装webpack">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/59967359gw1fakkllpcnaj207i038q2q.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/09/webpack-learning-1/"/>
+
+  <title> webpack学习笔记 | 盆老板的烧饼铺 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">盆老板的烧饼铺</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                webpack学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-09T09:48:24+08:00" content="2016-12-09">
+              2016-12-09
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近开始学习webpack，本篇文章中的例子主要了参考webpack官网的指南。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>使用webpack需要安装npm和node，这里我使用的是node v6.9.2 &amp; npm v3.10.3</p>
+<h3 id="初始化一个项目"><a href="#初始化一个项目" class="headerlink" title="初始化一个项目"></a>初始化一个项目</h3><p>1.新建一个名为webpack的文件夹，创建两个目录 bin和src<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir bin</div><div class="line">mkdir src</div></pre></td></tr></table></figure></p>
+<p>2.为项目安装webpack</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev webpack</div></pre></td></tr></table></figure>
+<p>–save 会自动把模块和版本号添加到package.json中的dependencies中，-dev会添加到devdependencies中，也就是当前的开发目录中，denpendencies是产品依赖模块，devdependencies是开发依赖模块，所以如果开发过程中需要的东西，需要-dev<br>3.在项目下增加index.html, src中新建两个文件，app.js &amp; cats.js<br>app.js作为整个webpack工程的entry，也是webpack进行模块管理依赖的入口<br>index.html中的内容<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;meta charset="utf-8"&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">    	&lt;div id="main"&gt;&lt;/div&gt;</div><div class="line">        &lt;script src="bin/app.bundle.js" charset="utf-8"&gt;&lt;/script&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>cats.js中的内容<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> cats = [<span class="string">'dave'</span>, <span class="string">'henry'</span>, <span class="string">'martha'</span>];</div><div class="line"><span class="built_in">module</span>.exports = cats;</div></pre></td></tr></table></figure></p>
+<p>app.js中的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import &apos;babel-polyfill&apos;</div><div class="line">import cats from &apos;./cats&apos;</div><div class="line"></div><div class="line">let $main = document.querySelector(&apos;#main&apos;)</div><div class="line">for (const cat of cats) &#123;</div><div class="line">	let childNode = document.createElement(&apos;p&apos;)</div><div class="line">	childNode.innerText = cat</div><div class="line">	$main.appendChild(childNode)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.安装babel-loader<br>因为使用了ES6，所以需要安装babel等依赖，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev babel-core babel-preset-es2015</div><div class="line">npm install --save-dev babel-loader</div><div class="line">npm install --save babel-polyfill</div></pre></td></tr></table></figure></p>
+<p>babel-polyfill是为IE8等浏览器添加完整的ES5 API<br>还需要在项目中添加一个.babelrc文件，添加<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"presets"</span>: [ <span class="string">"es2015"</span> ]&#125;</div></pre></td></tr></table></figure></p>
+<p>5.配置webpack.config.js<br>这个文件是webpack的灵魂，所有的配置都在这个文件中设置。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  entry: <span class="string">'./src/app.js'</span>,</div><div class="line">  output: &#123;</div><div class="line">    path: <span class="string">'./bin'</span>,</div><div class="line">    filename: <span class="string">'app.bundle.js'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">  	loaders: [&#123;</div><div class="line">  		test: <span class="regexp">/\.js$/</span>,</div><div class="line">  		exclude: <span class="regexp">/node-modules/</span>,</div><div class="line">  		loader: <span class="string">'babel-loader'</span></div><div class="line">  	&#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>entry中设置了整个webpack进行依赖管理的入口文件，output是打包后生成的文件，现在设置为./bin文件夹下的app.bundle.js文件。<br>使用babel-loader处理es6的写法，匹配除了/node-modules目录下的所有.js的文件<br>6.通过webpack指令对项目进行打包<br>在项目目录下运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webpack</div></pre></td></tr></table></figure></p>
+<p>控制台打印结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ webpack</div><div class="line">Hash: a9e98fe2469f09c42db9</div><div class="line">Version: webpack 1.14.0</div><div class="line">Time: 5411ms</div><div class="line">        Asset     Size  Chunks             Chunk Names</div><div class="line">app.bundle.js  91.6 kB       0  [emitted]  main</div><div class="line">    + 300 hidden modules</div></pre></td></tr></table></figure></p>
+<p>可以在./bin文件下查看到生成的app.bundle.js，点击查看index.html<br><img src="http://ww4.sinaimg.cn/large/59967359gw1fakkllpcnaj207i038q2q.jpg" alt="index result"><br>在app.bundle.js中可以看到，其实整个模块管理通过一个function <strong>webpack_require</strong>(moduleId) 实现，每个模块都拥有一个自己的moduleId和exports，如果依赖于某个模块，则使用<strong>webpack_require</strong>(moduleId)调用。entry作为入口，通过<strong>webpack_require</strong>(0)，而在0中，则通过<strong>webpack_require</strong>调用自己所依赖的模块<br><img src="http://ww2.sinaimg.cn/large/59967359gw1fakl0oer1oj20e906ldgt.jpg" alt="entry中调用"></p>
+<h3 id="loader扩展"><a href="#loader扩展" class="headerlink" title="loader扩展"></a>loader扩展</h3><p>在上面的例子中，已经使用了一个babel-loader，其实还有很多非常常用的loader，比如处理css和各种静态资源的loader<br>1.处理css<br>在项目中添加一个style.css的文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">body &#123;</div><div class="line">	background: yellow;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在app.js中引入style.css<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'babel-polyfill'</span></div><div class="line"><span class="keyword">import</span> cats <span class="keyword">from</span> <span class="string">'./cats'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'../style.css'</span></div></pre></td></tr></table></figure></p>
+<p>在webpack.config.js中配置需要的loader<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>: &#123;</div><div class="line">  	loaders: [&#123;</div><div class="line">  		test: <span class="regexp">/\.js$/</span>,</div><div class="line">  		exclude: <span class="regexp">/node-modules/</span>,</div><div class="line">  		loader: <span class="string">'babel-loader'</span></div><div class="line">  	&#125;, &#123;</div><div class="line">  		test: <span class="regexp">/\.css$/</span>,</div><div class="line">  		loader: <span class="string">"style!css"</span></div><div class="line">  	&#125;]</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>这里注意要npm安装对应的loader<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install --save style-loader</div><div class="line">npm install --save css-loader</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag">#webpack</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/30/react-extends/" rel="next" title="react中的extends">
+                <i class="fa fa-chevron-left"></i> react中的extends
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/large/59967359gw1f9cd8wwvbtj208v0a0gln.jpg"
+               alt="Hannah He" />
+          <p class="site-author-name" itemprop="name">Hannah He</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化一个项目"><span class="nav-number">2.</span> <span class="nav-text">初始化一个项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loader扩展"><span class="nav-number">3.</span> <span class="nav-text">loader扩展</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hannah He</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
