@@ -1,0 +1,570 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="移动端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这两天在做一个活动页，页面中有一个fixed布局的底部banner和一个input，点击input唤起软键盘进行输入。但开发过程中发现，当软键盘被唤起时，会出现fixed布局的banner出现在页面的中部，而不是按照fixed的表现紧贴在软键盘上部，同时滑动下部的页面，banner也会跟着滑动，也就是说fixed布局失效了查阅了一些资料以后发现，ios下确实存在这个问题，android下不会出现，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ios下微信浏览器fixed布局与软键盘冲突问题">
+<meta property="og:url" content="http://yoursite.com/2017/01/15/ios-fixed/index.html">
+<meta property="og:site_name" content="盆老板的烧饼铺">
+<meta property="og:description" content="这两天在做一个活动页，页面中有一个fixed布局的底部banner和一个input，点击input唤起软键盘进行输入。但开发过程中发现，当软键盘被唤起时，会出现fixed布局的banner出现在页面的中部，而不是按照fixed的表现紧贴在软键盘上部，同时滑动下部的页面，banner也会跟着滑动，也就是说fixed布局失效了查阅了一些资料以后发现，ios下确实存在这个问题，android下不会出现，">
+<meta property="og:updated_time" content="2017-01-16T15:25:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ios下微信浏览器fixed布局与软键盘冲突问题">
+<meta name="twitter:description" content="这两天在做一个活动页，页面中有一个fixed布局的底部banner和一个input，点击input唤起软键盘进行输入。但开发过程中发现，当软键盘被唤起时，会出现fixed布局的banner出现在页面的中部，而不是按照fixed的表现紧贴在软键盘上部，同时滑动下部的页面，banner也会跟着滑动，也就是说fixed布局失效了查阅了一些资料以后发现，ios下确实存在这个问题，android下不会出现，">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/15/ios-fixed/"/>
+
+  <title> ios下微信浏览器fixed布局与软键盘冲突问题 | 盆老板的烧饼铺 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">盆老板的烧饼铺</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ios下微信浏览器fixed布局与软键盘冲突问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-15T21:17:25+08:00" content="2017-01-15">
+              2017-01-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这两天在做一个活动页，页面中有一个fixed布局的底部banner和一个input，点击input唤起软键盘进行输入。但开发过程中发现，当软键盘被唤起时，会出现fixed布局的banner出现在页面的中部，而不是按照fixed的表现紧贴在软键盘上部，同时滑动下部的页面，banner也会跟着滑动，也就是说fixed布局失效了<br>查阅了一些资料以后发现，ios下确实存在这个问题，android下不会出现，确实ios在处理fixed布局上存在问题，[百度efe的这篇文章]: <a href="http://efe.baidu.com/blog/mobile-fixed-layout/" target="_blank" rel="external">http://efe.baidu.com/blog/mobile-fixed-layout/</a> 里也提到，不只是type=text的input，其他会唤起软键盘的元素(时间日期选择、select选择等)，都会出现同样的问题。<br>主要的解决方案如下：    </p>
+<h4 id="方案1-在唤起软键盘时，隐藏所有fixed的元素"><a href="#方案1-在唤起软键盘时，隐藏所有fixed的元素" class="headerlink" title="方案1: 在唤起软键盘时，隐藏所有fixed的元素"></a>方案1: 在唤起软键盘时，隐藏所有fixed的元素</h4><p>分别监听focus和blur事件，在唤起软键盘的情况下隐藏fixed元素  </p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$phone.addEventListener(<span class="string">'focus'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.fixedVisible = <span class="literal">false</span></div><div class="line">&#125;)</div><div class="line">$phone.addEventListener(<span class="string">'blur'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.fixedVisible = <span class="literal">true</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>但是这种方式只适用于底部的banner这种会被软键盘遮挡住的部位，对于其他一些必须始终显示的fixed元素（例如顶部banner）就不适用。    </p>
+<h4 id="方案2-包含fixed的元素不出现滚动，只让页面主体的部分出现滚动，页面主体进行绝对定位，内部进行滚动"><a href="#方案2-包含fixed的元素不出现滚动，只让页面主体的部分出现滚动，页面主体进行绝对定位，内部进行滚动" class="headerlink" title="方案2: 包含fixed的元素不出现滚动，只让页面主体的部分出现滚动，页面主体进行绝对定位，内部进行滚动"></a>方案2: 包含fixed的元素不出现滚动，只让页面主体的部分出现滚动，页面主体进行绝对定位，内部进行滚动</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">class</span>=<span class="string">"layout-scroll-fixed"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- fixed定位的头部 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 可以滚动的区域 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">main</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- 内容在这里... --&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">main</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- fixed定位的底部 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"Footer..."</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"submit"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">header</span> &#123;</div><div class="line">    <span class="attribute">position</span>: fixed;</div><div class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">footer</span> &#123;</div><div class="line">    <span class="attribute">position</span>: fixed;</div><div class="line">    <span class="attribute">height</span>: <span class="number">34px</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">main</span> &#123;</div><div class="line">    <span class="comment">/* main绝对定位，进行内部滚动 */</span></div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50px</span>;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">34px</span>;</div><div class="line">    <span class="comment">/* 使之可以滚动 */</span></div><div class="line">    <span class="attribute">overflow-y</span>: scroll;</div><div class="line">    <span class="comment">/* 增加该属性，可以增加弹性 */</span></div><div class="line">    <span class="attribute">-webkit-overflow-scrolling</span>: touch;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">main</span> <span class="selector-class">.content</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">2000px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就可以实现main的内部内容滚动，fixed元素不会跟随滚动，软键盘也不会影响到fixed布局    </p>
+<h4 id="方案3-适用iScroll"><a href="#方案3-适用iScroll" class="headerlink" title="方案3: 适用iScroll"></a>方案3: 适用iScroll</h4><p>这是一个第三方的库，适用方法之后再补充</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/移动端/" rel="tag">#移动端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/09/webpack-learning-1/" rel="next" title="webpack学习笔记">
+                <i class="fa fa-chevron-left"></i> webpack学习笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/large/59967359gw1f9cd8wwvbtj208v0a0gln.jpg"
+               alt="Hannah He" />
+          <p class="site-author-name" itemprop="name">Hannah He</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#方案1-在唤起软键盘时，隐藏所有fixed的元素"><span class="nav-number">1.</span> <span class="nav-text">方案1: 在唤起软键盘时，隐藏所有fixed的元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案2-包含fixed的元素不出现滚动，只让页面主体的部分出现滚动，页面主体进行绝对定位，内部进行滚动"><span class="nav-number">2.</span> <span class="nav-text">方案2: 包含fixed的元素不出现滚动，只让页面主体的部分出现滚动，页面主体进行绝对定位，内部进行滚动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案3-适用iScroll"><span class="nav-number">3.</span> <span class="nav-text">方案3: 适用iScroll</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hannah He</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -235,6 +235,103 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/15/ios-fixed/" itemprop="url">
+                  ios下微信浏览器fixed布局与软键盘冲突问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-15T21:17:25+08:00" content="2017-01-15">
+              2017-01-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这两天在做一个活动页，页面中有一个fixed布局的底部banner和一个input，点击input唤起软键盘进行输入。但开发过程中发现，当软键盘被唤起时，会出现fixed布局的banner出现在页面的中部，而不是按照fixed的表现紧贴在软键盘上部，同时滑动下部的页面，banner也会跟着滑动，也就是说fixed布局失效了<br>查阅了一些资料以后发现，ios下确实存在这个问题，android下不会出现，确实ios在处理fixed布局上存在问题，[百度efe的这篇文章]: <a href="http://efe.baidu.com/blog/mobile-fixed-layout/">http://efe.baidu.com/blog/mobile-fixed-layout/</a> 里也提到，不只是type=text的input，其他会唤起软键盘的元素(时间日期选择、select选择等)，都会出现同样的问题。<br>主要的解决方案如下：    </p>
+<h4 id="方案1-在唤起软键盘时，隐藏所有fixed的元素"><a href="#方案1-在唤起软键盘时，隐藏所有fixed的元素" class="headerlink" title="方案1: 在唤起软键盘时，隐藏所有fixed的元素"></a>方案1: 在唤起软键盘时，隐藏所有fixed的元素</h4><p>分别监听focus和blur事件，在唤起软键盘的情况下隐藏fixed元素  </p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/15/ios-fixed/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/12/09/webpack-learning-1/" itemprop="url">
                   webpack学习笔记
                 </a>
@@ -1146,7 +1243,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1156,7 +1253,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1193,7 +1290,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -98,7 +98,7 @@
 2.为项目安装webpack">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/59967359gw1fakkllpcnaj207i038q2q.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/59967359gw1fakl0oer1oj20e906ldgt.jpg">
-<meta property="og:updated_time" content="2016-12-10T01:54:39.000Z">
+<meta property="og:updated_time" content="2017-01-16T15:25:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack学习笔记">
 <meta name="twitter:description" content="最近开始学习webpack，本篇文章中的例子主要了参考webpack官网的指南。
@@ -294,7 +294,7 @@
 <p>2.为项目安装webpack</p>
 <a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev webpack</div></pre></td></tr></table></figure>
-<p>–save 会自动把模块和版本号添加到package.json中的dependencies中，-dev会添加到devdependencies中，也就是当前的开发目录中，denpendencies是产品依赖模块，devdependencies是开发依赖模块，所以如果开发过程中需要的东西，需要-dev<br>3.在项目下增加index.html, src中新建两个文件，app.js &amp; cats.js<br>app.js作为整个webpack工程的entry，也是webpack进行模块管理依赖的入口<br>index.html中的内容<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;meta charset="utf-8"&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">    	&lt;div id="main"&gt;&lt;/div&gt;</div><div class="line">        &lt;script src="bin/app.bundle.js" charset="utf-8"&gt;&lt;/script&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>–save 会自动把模块和版本号添加到package.json中的dependencies中，-dev会添加到devdependencies中，也就是当前的开发目录中，denpendencies是产品依赖模块，devdependencies是开发依赖模块，所以如果开发过程中需要的东西，需要-dev<br>3.在项目下增加index.html, src中新建两个文件，app.js &amp; cats.js<br>app.js作为整个webpack工程的entry，也是webpack进行模块管理依赖的入口<br>index.html中的内容<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bin/app.bundle.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>cats.js中的内容<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> cats = [<span class="string">'dave'</span>, <span class="string">'henry'</span>, <span class="string">'martha'</span>];</div><div class="line"><span class="built_in">module</span>.exports = cats;</div></pre></td></tr></table></figure></p>
 <p>app.js中的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import &apos;babel-polyfill&apos;</div><div class="line">import cats from &apos;./cats&apos;</div><div class="line"></div><div class="line">let $main = document.querySelector(&apos;#main&apos;)</div><div class="line">for (const cat of cats) &#123;</div><div class="line">	let childNode = document.createElement(&apos;p&apos;)</div><div class="line">	childNode.innerText = cat</div><div class="line">	$main.appendChild(childNode)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>4.安装babel-loader<br>因为使用了ES6，所以需要安装babel等依赖，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev babel-core babel-preset-es2015</div><div class="line">npm install --save-dev babel-loader</div><div class="line">npm install --save babel-polyfill</div></pre></td></tr></table></figure></p>
@@ -303,10 +303,18 @@
 <p>entry中设置了整个webpack进行依赖管理的入口文件，output是打包后生成的文件，现在设置为./bin文件夹下的app.bundle.js文件。<br>使用babel-loader处理es6的写法，匹配除了/node-modules目录下的所有.js的文件<br>6.通过webpack指令对项目进行打包<br>在项目目录下运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webpack</div></pre></td></tr></table></figure></p>
 <p>控制台打印结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ webpack</div><div class="line">Hash: a9e98fe2469f09c42db9</div><div class="line">Version: webpack 1.14.0</div><div class="line">Time: 5411ms</div><div class="line">        Asset     Size  Chunks             Chunk Names</div><div class="line">app.bundle.js  91.6 kB       0  [emitted]  main</div><div class="line">    + 300 hidden modules</div></pre></td></tr></table></figure></p>
 <p>可以在./bin文件下查看到生成的app.bundle.js，点击查看index.html<br><img src="http://ww4.sinaimg.cn/large/59967359gw1fakkllpcnaj207i038q2q.jpg" alt="index result"><br>在app.bundle.js中可以看到，其实整个模块管理通过一个function <strong>webpack_require</strong>(moduleId) 实现，每个模块都拥有一个自己的moduleId和exports，如果依赖于某个模块，则使用<strong>webpack_require</strong>(moduleId)调用。entry作为入口，通过<strong>webpack_require</strong>(0)，而在0中，则通过<strong>webpack_require</strong>调用自己所依赖的模块<br><img src="http://ww2.sinaimg.cn/large/59967359gw1fakl0oer1oj20e906ldgt.jpg" alt="entry中调用"></p>
-<h3 id="loader扩展"><a href="#loader扩展" class="headerlink" title="loader扩展"></a>loader扩展</h3><p>在上面的例子中，已经使用了一个babel-loader，其实还有很多非常常用的loader，比如处理css和各种静态资源的loader<br>1.处理css<br>在项目中添加一个style.css的文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">body &#123;</div><div class="line">	background: yellow;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="loader扩展"><a href="#loader扩展" class="headerlink" title="loader扩展"></a>loader扩展</h3><p>在上面的例子中，已经使用了一个babel-loader，其实还有很多非常常用的loader，比如处理css和各种静态资源的loader </p>
+<ol>
+<li>处理css<br>在项目中添加一个style.css的文件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">body &#123;</div><div class="line">	background: yellow;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
 <p>在app.js中引入style.css<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'babel-polyfill'</span></div><div class="line"><span class="keyword">import</span> cats <span class="keyword">from</span> <span class="string">'./cats'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'../style.css'</span></div></pre></td></tr></table></figure></p>
 <p>在webpack.config.js中配置需要的loader<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>: &#123;</div><div class="line">  	loaders: [&#123;</div><div class="line">  		test: <span class="regexp">/\.js$/</span>,</div><div class="line">  		exclude: <span class="regexp">/node-modules/</span>,</div><div class="line">  		loader: <span class="string">'babel-loader'</span></div><div class="line">  	&#125;, &#123;</div><div class="line">  		test: <span class="regexp">/\.css$/</span>,</div><div class="line">  		loader: <span class="string">"style!css"</span></div><div class="line">  	&#125;]</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<p>这里注意要npm安装对应的loader<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install --save style-loader</div><div class="line">npm install --save css-loader</div></pre></td></tr></table></figure></p>
+<p>这里的style和css实际上对应的是style-loader和css-loader，!表示链式载入loader处理<br>注意要npm安装对应的loader<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install --save style-loader</div><div class="line">npm install --save css-loader</div></pre></td></tr></table></figure></p>
+<p>如果我们使用的是less或者sass类似的css预处理器，只需要在链式中加入相应的loader，例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; test: <span class="regexp">/\.less$/</span>, loader: <span class="string">'style!css!less'</span> &#125;  <span class="comment">//这里添加了一个less-loader</span></div></pre></td></tr></table></figure></p>
+<p>2.处理图片及其他静态资源<br>一般有url-loader和file-loader两种<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  test: <span class="regexp">/\.(png|jpg)$/</span>,</div><div class="line">  loader: <span class="string">"file?name=[path][name].[ext]!./image.png"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  test: <span class="regexp">/\.(png|jpg)$/</span>,</div><div class="line">  loader: <span class="string">"url-loader?limit=8192"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>url-loader可以认为是file-loader的封装</p>
 
       
     </div>
@@ -345,6 +353,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/15/ios-fixed/" rel="prev" title="ios下微信浏览器fixed布局与软键盘冲突问题">
+                ios下微信浏览器fixed布局与软键盘冲突问题 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -412,7 +424,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -422,7 +434,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -470,7 +482,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
